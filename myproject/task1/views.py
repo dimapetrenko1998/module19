@@ -24,10 +24,12 @@ def register(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             if not Buyer.objects.filter(name=username).exists():
-                Buyer.objects.create(name=username, balance=0.00, age=18)
+                Buyer.objects.create(name=username, balance=0.00, age=18)  # Примерное значение
                 return redirect('home')
     else:
         form = RegistrationForm()
     return render(request, 'object_detection/registration.html', {'form': form})
 
 
+def login_view(request):
+    return render(request, 'object_detection/login.html')
