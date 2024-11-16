@@ -13,6 +13,7 @@ def products(request):
     return render(request, 'object_detection/products.html', {'games': games})
 
 
+
 def cart(request):
     return render(request, 'object_detection/cart.html')
 
@@ -23,8 +24,15 @@ def register(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            if not Buyer.objects.filter(name=username).exists():
-                Buyer.objects.create(name=username, balance=0.00, age=18)  # Примерное значение
+
+            buyers = Buyer.objects.all()
+            user_exists = False
+            for buyer in buyers:
+                if buyer.name == username:
+                    user_exists = True
+                    break
+            if not user_exists:
+                Buyer.objects.create(name=username, balance=0.00, age=18)
                 return redirect('home')
     else:
         form = RegistrationForm()
@@ -33,3 +41,6 @@ def register(request):
 
 def login_view(request):
     return render(request, 'object_detection/login.html')
+
+
+
